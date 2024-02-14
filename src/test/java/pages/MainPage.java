@@ -3,6 +3,7 @@ package pages;
 
 import com.codeborne.selenide.SelenideElement;
 import com.codeborne.selenide.selector.ByShadow;
+import io.qameta.allure.Step;
 import org.openqa.selenium.*;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
@@ -46,6 +47,7 @@ public class MainPage extends BasePage {
 
     private String mainUrl = "https://www.bahn.de/";
 
+    @Step("Open main pageal")
     public MainPage openMainPage() {
         open(mainUrl);
         waiter = new WebDriverWait(webdriver().object(), Duration.ofSeconds(5));
