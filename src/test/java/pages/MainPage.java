@@ -47,14 +47,14 @@ public class MainPage extends BasePage {
 
     private String mainUrl = "https://www.bahn.de/";
 
-    @Step("Open main pageal")
+    @Step("Open main page")
     public MainPage openMainPage() {
         open(mainUrl);
         waiter = new WebDriverWait(webdriver().object(), Duration.ofSeconds(5));
         validateUrl(mainUrl);
         return this;
     }
-
+    @Step("Close coockies")
     public MainPage closeCoockiesIfPresent() {
         try{
         waiter.until(ExpectedConditions.elementToBeClickable(ByShadow.cssSelector(TARGETOFSHADOWELEMENT, HOSTOFSHADOWELEMENT)));
@@ -65,7 +65,7 @@ public class MainPage extends BasePage {
         }
         return this;
     }
-
+    @Step("Enter place of start {startpoint} and place of finish {endpoint}")
     public MainPage enterSearchStartEndPoints(String startpoint, String endpoint) {
         $(STARTPOINTINPUT).shouldBe(enabled).setValue(startpoint);
         $(POINTDDLIST(startpoint)).shouldBe(enabled).click();
@@ -74,7 +74,6 @@ public class MainPage extends BasePage {
         return this;
     }
 
-
     public String futureDate(int date, String format) {
         LocalDate localDate = LocalDate.now();
         LocalDate futureDate = localDate.plusDays(date);
@@ -82,7 +81,7 @@ public class MainPage extends BasePage {
         return futureDate.format(formatter);
     }
 
-
+    @Step("Choose Start Date")
     public MainPage chooseStartDate(int date, String format) {
         $(STARTDATE).click();
         $(CALENDAR).shouldBe(visible);
@@ -91,6 +90,7 @@ public class MainPage extends BasePage {
         $(ACCEPTBUTTON).click();
         return this;
     }
+    @Step("Choose Finish Date")
     public MainPage chooseReturnDate(int date, String format) {
         $(FINISHDATE).click();
         $(CALENDAR).shouldBe(visible);
@@ -99,7 +99,7 @@ public class MainPage extends BasePage {
         $(ACCEPTBUTTON).click();
         return this;
     }
-
+    @Step("Add passenger and a dog")
     public MainPage addPassenger() {
         $(PASSANGERSDATA).shouldBe(enabled).click();
         $(UPDATEPASSENGERFORM).shouldBe(visible);
@@ -112,6 +112,7 @@ public class MainPage extends BasePage {
         return this;
     }
 
+    @Step("Check Selected Parameters")
     public MainPage checkSelectedParameters(int dateStart, int dateFinish, int passengers, String format){
         String startDate = futureDate(dateStart, format);
         String finishDate = futureDate(dateFinish, format);
@@ -120,6 +121,4 @@ public class MainPage extends BasePage {
         $(PASSANGERSDATA).shouldHave(partialText(String.valueOf(passengers)));
         return this;
     }
-
-
 }
