@@ -16,7 +16,6 @@ import static com.codeborne.selenide.Condition.*;
 import static com.codeborne.selenide.Selenide.*;
 
 public class MainPage extends BasePage {
-    public WebDriverWait waiter;
 
     private By STARTPOINTINPUT = By.name("quickFinderBasic-von");
     private By POINTDDLIST(String ort) {

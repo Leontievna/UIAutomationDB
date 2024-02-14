@@ -21,7 +21,7 @@ public class LoginPage extends BasePage {
         return new LoginPage();
     }
 
-    public MainPage inputCredentials(String username){
+    public MainPage inputCredentials(String username) {
         $(USERINPUT).sendKeys(username);
         $(ACCESSBUTTON).click();
         $(BACKBUTTON).click();

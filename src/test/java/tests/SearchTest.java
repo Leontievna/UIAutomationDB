@@ -26,6 +26,10 @@ public class SearchTest {
         String endpointvalue = "Hamburg";
         String format = "dd.MM.yyyy";
         String formatCheck = "dd. MMM";
+        String name = "Anton";
+        String lastname = "Dolin";
+        String userEmail = "Kunde.karla@gmx.de";
+
         int date1 = 2;
         int date2 = date1 + 3;
         mainPage.openMainPage()
@@ -38,7 +42,8 @@ public class SearchTest {
         searchPage.search()
                 .validationTableResult(startpointvalue, endpointvalue)
                 .selectionOfTicket(date2,formatCheck)
-                .chooseClassOffer();
+                .chooseClassOffer()
+                .enterCustomerData(name, lastname, userEmail);
     }
 
 
