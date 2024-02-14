@@ -45,6 +45,4 @@ public class SearchTest {
                 .chooseClassOffer()
                 .enterCustomerData(name, lastname, userEmail);
     }
-
-
 }
