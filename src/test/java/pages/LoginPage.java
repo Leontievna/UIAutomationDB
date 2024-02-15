@@ -1,6 +1,7 @@
 package pages;
 
 import com.codeborne.selenide.Condition;
+import io.qameta.allure.Step;
 import org.openqa.selenium.By;
 
 import static com.codeborne.selenide.Selenide.$;
@@ -14,6 +15,7 @@ public class LoginPage extends BasePage {
     By TITLE = By.cssSelector("#kc-page-title .login-view");
     private String url = "https://accounts.bahn.de/auth/";
 
+    @Step("Click a login button")
     public LoginPage login() {
         $(LOGINBUTTON).shouldBe(Condition.enabled).click();
         validateUrl(url);
@@ -21,6 +23,7 @@ public class LoginPage extends BasePage {
         return new LoginPage();
     }
 
+    @Step("Enter a username for login")
     public MainPage inputCredentials(String username) {
         $(USERINPUT).sendKeys(username);
         $(ACCESSBUTTON).click();

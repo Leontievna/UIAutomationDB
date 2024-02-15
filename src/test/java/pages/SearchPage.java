@@ -1,6 +1,7 @@
 package pages;
 
 import com.codeborne.selenide.Condition;
+import io.qameta.allure.Step;
 import org.openqa.selenium.By;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
@@ -32,18 +33,19 @@ public class SearchPage extends BasePage {
 
 
     MainPage mainPage = new MainPage();
-
+    @Step("Click search button")
     public SearchPage search() {
         $(SEARCHBUTTON).shouldBe(enabled).click();
         validateUrl(url);
         return this;
     }
-
+    @Step("Check the table with results of search")
     public SearchPage validationTableResult(String startpointvalue, String endpointvalue) {
         $$(REISETICKETS).first().shouldHave(Condition.partialText(endpointvalue), Condition.partialText(startpointvalue));
         return this;
     }
 
+    @Step("Selection of tickets")
     public SearchPage selectionOfTicket(int date, String format) {
         $(APPLYTICKET).shouldBe(enabled).click();
         $(TICKETSLISTHEADER).shouldHave(partialText(mainPage.futureDate(date, format)));
@@ -52,6 +54,7 @@ public class SearchPage extends BasePage {
         return this;
     }
 
+    @Step("Choose a class of the trip and place")
     public SearchPage chooseClassOffer() {
         validateUrl(offerUrl);
         waiter = new WebDriverWait(webdriver().object(), Duration.ofSeconds(5));
@@ -65,6 +68,7 @@ public class SearchPage extends BasePage {
         return this;
     }
 
+    @Step("Enter of a passenger data")
     public SearchPage enterCustomerData(String name, String lastname, String email) {
         waiter = new WebDriverWait(webdriver().object(), Duration.ofSeconds(5));
         $(TITLEDD).shouldBe(enabled).click();

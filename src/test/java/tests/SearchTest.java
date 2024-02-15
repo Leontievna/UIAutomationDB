@@ -1,15 +1,18 @@
 package tests;
 
+import io.qameta.allure.Description;
+import io.qameta.allure.Epic;
 import org.junit.Test;
 import pages.MainPage;
 import pages.SearchPage;
-
+@Epic("Ticket search")
 public class SearchTest {
     MainPage mainPage = new MainPage();
     SearchPage searchPage = new SearchPage();
 
 
-    @Test
+    @Test()
+    @Description("Smoke test for search")
     public void FirstTest(){
         String startpointvalue = "Bonn";
         String endpointvalue = "Hamburg";
@@ -21,6 +24,7 @@ public class SearchTest {
     }
 
     @Test()
+    @Description("Main scenario")
     public void SecondTest() {
         String startpointvalue = "Bonn";
         String endpointvalue = "Hamburg";

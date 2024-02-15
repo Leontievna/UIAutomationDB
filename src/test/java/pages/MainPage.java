@@ -81,7 +81,7 @@ public class MainPage extends BasePage {
         return futureDate.format(formatter);
     }
 
-    @Step("Choose Start Date")
+    @Step("Choose start date")
     public MainPage chooseStartDate(int date, String format) {
         $(STARTDATE).click();
         $(CALENDAR).shouldBe(visible);
@@ -90,7 +90,7 @@ public class MainPage extends BasePage {
         $(ACCEPTBUTTON).click();
         return this;
     }
-    @Step("Choose Finish Date")
+    @Step("Choose finish date")
     public MainPage chooseReturnDate(int date, String format) {
         $(FINISHDATE).click();
         $(CALENDAR).shouldBe(visible);
@@ -112,7 +112,7 @@ public class MainPage extends BasePage {
         return this;
     }
 
-    @Step("Check Selected Parameters")
+    @Step("Check selected early parameters")
     public MainPage checkSelectedParameters(int dateStart, int dateFinish, int passengers, String format){
         String startDate = futureDate(dateStart, format);
         String finishDate = futureDate(dateFinish, format);

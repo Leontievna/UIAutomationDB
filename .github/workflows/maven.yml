@@ -35,8 +35,8 @@ jobs:
       id: build
       uses: cloudposse/github-action-docker-build-push@main
       with:
-        registry: registry.hub.docker.com
-        repository: "janeaga/automation_tests"
+        registry: docker.io
+        repository: janeaga/automation_tests
         login: "${{ secrets.DOCKER_USERNAME }}"
         password: "${{ secrets.DOCKER_PASSWORD }}"
         platforms: linux/amd64,linux/arm64
