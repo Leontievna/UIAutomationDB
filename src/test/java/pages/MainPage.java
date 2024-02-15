@@ -1,7 +1,9 @@
 package pages;
 
 
+import com.codeborne.selenide.Condition;
 import com.codeborne.selenide.SelenideElement;
+import com.codeborne.selenide.conditions.Text;
 import com.codeborne.selenide.selector.ByShadow;
 import io.qameta.allure.Step;
 import org.openqa.selenium.*;
@@ -20,7 +22,8 @@ import static com.codeborne.selenide.Selenide.*;
 public class MainPage extends BasePage {
 
     private By STARTPOINTINPUT = By.xpath("//*[contains(@name,'quickFinderBasic-von')]");
-    private By CLEARICON =  By.cssSelector(".icon-clear");
+    private By CLEARICONSTART =  By.cssSelector(".test-von-halt .icon-clear");
+    private By CLEARICONFINISH =  By.cssSelector(".test-nach-halt .icon-clear");
     private By POINTDDLIST(String ort) {
         return By.xpath("//*[contains(@data-value, '" + ort + " Hbf')]");
     }
@@ -41,7 +44,6 @@ public class MainPage extends BasePage {
     private By UPDATEPASSENGERFORM = By.cssSelector(".button-overlay-body-container__body");
     private By DDPASSENGERNUMBER = By.id("reisendeAnzahl-0");
     private By CHOOSEPASSANGERNUMBER = By.xpath("//*[@id='reisendeAnzahl-0-list']//*[@data-value = '2']");
-
     private By ADDNEWPASSANGERTYPEDD = By.cssSelector("#reisendeTyp-1");
     private By ADDNEWPASSANGER = By.cssSelector(".ReisendeHinzufuegenButton");
     private By ADDNEWPASSANGERTYPE = By.xpath("//*[@id='reisendeTyp-1-list']//*[@data-value = 'HUND']");
@@ -69,8 +71,14 @@ public class MainPage extends BasePage {
     }
     @Step("Enter place of start {startpoint} and place of finish {endpoint}")
     public MainPage enterSearchStartEndPoints(String startpoint, String endpoint) {
+        if($(CLEARICONSTART).is(visible)){
+            $(CLEARICONSTART).click();
+        }
         $(STARTPOINTINPUT).sendKeys(endpoint);
         $(POINTDDLIST(endpoint)).shouldBe(enabled).click();
+        if($(CLEARICONFINISH).is(visible)){
+            $(CLEARICONFINISH).click();
+        }
         $(ENDPOINTINPUT).shouldBe(enabled).sendKeys(startpoint);
         $(POINTDDLIST(startpoint)).shouldBe(enabled).click();
         return this;

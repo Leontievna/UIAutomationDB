@@ -1,6 +1,7 @@
 package pages;
 
 import com.codeborne.selenide.Condition;
+import com.codeborne.selenide.ex.ElementShould;
 import io.qameta.allure.Allure;
 import io.qameta.allure.Step;
 import org.openqa.selenium.By;
@@ -19,7 +20,8 @@ public class SearchPage extends BasePage {
     By TICKETSLISTHEADER = By.cssSelector(".buchungsstrecke-heading__title");
     By OFFERSSTEP = By.xpath("//*[@data-page=\"Angebote\"]");
     By OFFERCARDS = By.cssSelector(".angebot-details-buttons__auswaehlen");
-    By SEATPLACE = By.cssSelector(".platzreservierung-label");
+    By SEATPLACEDESCRIPTION = By.cssSelector(".platzreservierung__content .db-web-checkbox__input");
+    By SEATPLACE = By.className("platzreservierung-label");
     By CONFIRMOFFER = By.id("btn-weiter");
     By ANONIM = By.xpath("//*[@for='anmeldungauswahl-anonym']");
     By TITLEDD = By.cssSelector(".test-name-anrede");
@@ -58,14 +60,17 @@ public class SearchPage extends BasePage {
     @Step("Choose a class of the trip and place")
     public SearchPage chooseClassOffer() {
         validateUrl(offerUrl);
-        waiter = new WebDriverWait(webdriver().object(), Duration.ofSeconds(5));
+        waiter = new WebDriverWait(webdriver().object(), Duration.ofSeconds(9));
         $$(OFFERCARDS).first().click();
-        $(SEATPLACE).scrollTo().shouldBe(visible);
-        $(SEATPLACE).click();
+        $(SEATPLACE).scrollIntoView(true);
+        waiter.until(ExpectedConditions.visibilityOf($(SEATPLACE)));
+        $(SEATPLACE).shouldBe(visible).click();
+        waiter.until(ExpectedConditions.visibilityOfElementLocated(SEATPLACEDESCRIPTION));
+        $(CONFIRMOFFER).scrollIntoView(true);
         waiter.until(ExpectedConditions.elementToBeClickable(CONFIRMOFFER));
-        $(CONFIRMOFFER).shouldBe(visible).click();
+        $(CONFIRMOFFER).click();
+        waiter.until(ExpectedConditions.urlContains(kundeUrl));
         $(ANONIM).shouldBe(visible).click();
-        validateUrl(kundeUrl);
         $(CONFIRMOFFER).shouldBe(visible).click();
         Allure.addAttachment("Test",attachScreenshot());
         return this;
