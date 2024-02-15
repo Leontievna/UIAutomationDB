@@ -25,8 +25,8 @@ public class BasePage {
     public ByteArrayInputStream attachScreenshot() {
         return new ByteArrayInputStream(Selenide.screenshot(OutputType.BYTES));
     }
-    @BeforeClass
-    public static void Preparation(){
-        Configuration.headless = true;
-    }
+//    @BeforeClass
+//    public static void Preparation(){
+//        Configuration.headless = true;
+//    }
 }
