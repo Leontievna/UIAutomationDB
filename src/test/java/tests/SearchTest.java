@@ -1,6 +1,8 @@
 package tests;
 
+import com.codeborne.selenide.Configuration;
 import io.qameta.allure.*;
+import org.junit.BeforeClass;
 import org.junit.Test;
 import pages.BasePage;
 import pages.MainPage;
@@ -10,7 +12,6 @@ import pages.SearchPage;
 public class SearchTest extends BasePage {
     MainPage mainPage = new MainPage();
     SearchPage searchPage = new SearchPage();
-
 
     @Test()
     @Description("Smoke test for search")
