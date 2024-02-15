@@ -1,6 +1,7 @@
 package pages;
 
 import com.codeborne.selenide.Condition;
+import io.qameta.allure.Allure;
 import io.qameta.allure.Step;
 import org.openqa.selenium.By;
 import org.openqa.selenium.support.ui.ExpectedConditions;
@@ -18,7 +19,7 @@ public class SearchPage extends BasePage {
     By TICKETSLISTHEADER = By.cssSelector(".buchungsstrecke-heading__title");
     By OFFERSSTEP = By.xpath("//*[@data-page=\"Angebote\"]");
     By OFFERCARDS = By.cssSelector(".angebot-details-buttons__auswaehlen");
-    By SEATPLACE = By.id("reservierung");
+    By SEATPLACE = By.cssSelector(".platzreservierung-label");
     By CONFIRMOFFER = By.id("btn-weiter");
     By ANONIM = By.xpath("//*[@for='anmeldungauswahl-anonym']");
     By TITLEDD = By.cssSelector(".test-name-anrede");
@@ -59,12 +60,14 @@ public class SearchPage extends BasePage {
         validateUrl(offerUrl);
         waiter = new WebDriverWait(webdriver().object(), Duration.ofSeconds(5));
         $$(OFFERCARDS).first().click();
-        $(SEATPLACE).shouldBe(enabled).click();
-        $(CONFIRMOFFER).scrollIntoView(false);
-        $(CONFIRMOFFER).shouldBe(enabled).click();
+        $(SEATPLACE).scrollTo().shouldBe(visible);
+        $(SEATPLACE).click();
+        waiter.until(ExpectedConditions.elementToBeClickable(CONFIRMOFFER));
+        $(CONFIRMOFFER).shouldBe(visible).click();
         $(ANONIM).shouldBe(visible).click();
         validateUrl(kundeUrl);
         $(CONFIRMOFFER).shouldBe(visible).click();
+        Allure.addAttachment("Test",attachScreenshot());
         return this;
     }
 

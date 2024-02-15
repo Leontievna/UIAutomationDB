@@ -12,13 +12,15 @@ import java.time.Duration;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.Locale;
+import java.util.NoSuchElementException;
 
 import static com.codeborne.selenide.Condition.*;
 import static com.codeborne.selenide.Selenide.*;
 
 public class MainPage extends BasePage {
 
-    private By STARTPOINTINPUT = By.name("quickFinderBasic-von");
+    private By STARTPOINTINPUT = By.xpath("//*[contains(@name,'quickFinderBasic-von')]");
+    private By CLEARICON =  By.cssSelector(".icon-clear");
     private By POINTDDLIST(String ort) {
         return By.xpath("//*[contains(@data-value, '" + ort + " Hbf')]");
     }
@@ -67,10 +69,10 @@ public class MainPage extends BasePage {
     }
     @Step("Enter place of start {startpoint} and place of finish {endpoint}")
     public MainPage enterSearchStartEndPoints(String startpoint, String endpoint) {
-        $(STARTPOINTINPUT).shouldBe(enabled).setValue(startpoint);
-        $(POINTDDLIST(startpoint)).shouldBe(enabled).click();
-        $(ENDPOINTINPUT).shouldBe(enabled).setValue(endpoint);
+        $(STARTPOINTINPUT).sendKeys(endpoint);
         $(POINTDDLIST(endpoint)).shouldBe(enabled).click();
+        $(ENDPOINTINPUT).shouldBe(enabled).sendKeys(startpoint);
+        $(POINTDDLIST(startpoint)).shouldBe(enabled).click();
         return this;
     }
 

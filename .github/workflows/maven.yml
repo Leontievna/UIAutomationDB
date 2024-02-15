@@ -28,18 +28,11 @@ jobs:
         distribution: 'temurin'
         cache: maven
 
+    - name: Build with Maven
+      run: mvn clean test
+
     - name: Set up Chrome
       uses: browser-actions/setup-chrome@v1
-
-    - name: Build
-      id: build
-      uses: cloudposse/github-action-docker-build-push@main
-      with:
-        registry: docker.io
-        repository: janeaga/automation_tests
-        login: "${{ secrets.DOCKER_USERNAME }}"
-        password: "${{ secrets.DOCKER_PASSWORD }}"
-        platforms: linux/amd64,linux/arm64
 
     - name: Upload Allure Report
       uses: actions/upload-artifact@v2
