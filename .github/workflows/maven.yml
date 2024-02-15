@@ -37,3 +37,6 @@ jobs:
       with:
         name: allure-results
         path: allure-results
+
+    - name: Generate README from template
+      run: cat README.template.md | envsubst > README.md
