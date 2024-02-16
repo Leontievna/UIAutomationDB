@@ -11,7 +11,6 @@ import pages.MainPage;
 import pages.SearchPage;
 
 @Epic("Ticket search")
-@Execution(ExecutionMode.CONCURRENT)
 public class SearchTest extends BasePage {
     MainPage mainPage = new MainPage();
     SearchPage searchPage = new SearchPage();
