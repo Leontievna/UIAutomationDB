@@ -37,3 +37,10 @@ jobs:
       with:
         name: allure-results
         path: allure-results
+
+    - name: Serve Allure report
+      run: npx http-server ./allure-report -p 8080
+
+    - name: Get HTTP server URL
+      run: echo "Allure report is available at $GITHUB_SERVER_URL:8080"
+

@@ -1,9 +1,7 @@
 package pages;
 
 
-import com.codeborne.selenide.Condition;
 import com.codeborne.selenide.SelenideElement;
-import com.codeborne.selenide.conditions.Text;
 import com.codeborne.selenide.selector.ByShadow;
 import io.qameta.allure.Step;
 import org.openqa.selenium.*;
@@ -14,7 +12,6 @@ import java.time.Duration;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.Locale;
-import java.util.NoSuchElementException;
 
 import static com.codeborne.selenide.Condition.*;
 import static com.codeborne.selenide.Selenide.*;
