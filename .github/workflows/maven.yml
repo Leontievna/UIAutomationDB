@@ -44,3 +44,7 @@ jobs:
     - name: Get HTTP server URL
       run: echo "Allure report is available at $GITHUB_SERVER_URL:8080"
 
+
+
+    - name: Generate README from template
+      run: cat README.template.md | envsubst > README.md
