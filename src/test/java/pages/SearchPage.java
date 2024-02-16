@@ -28,19 +28,19 @@ public class SearchPage extends BasePage {
     By FIRSTNAME = By.xpath("//*[@autocomplete='given-name']");
     By LASTNAME = By.xpath("//*[@autocomplete='family-name']");
     By EMAIL = By.name("kundenkonto-kontakt-email");
+    MainPage mainPage = new MainPage();
     private String url = "https://www.bahn.de/";
     private String kundeUrl = "fahrplan/kundendaten";
     private String offerUrl = "buchung/fahrplan/angebotsauswahl";
     private String paymentUrl = "/buchung/fahrplan/zahlung";
 
-
-    MainPage mainPage = new MainPage();
     @Step("Click search button")
     public SearchPage search() {
         $(SEARCHBUTTON).shouldBe(enabled).click();
         validateUrl(url);
         return this;
     }
+
     @Step("Check the table with results of search")
     public SearchPage validationTableResult(String startpointvalue, String endpointvalue) {
         $$(REISETICKETS).first().shouldHave(Condition.partialText(endpointvalue), Condition.partialText(startpointvalue));
@@ -71,7 +71,7 @@ public class SearchPage extends BasePage {
         waiter.until(ExpectedConditions.urlContains(kundeUrl));
         $(ANONIM).shouldBe(visible).click();
         $(CONFIRMOFFER).shouldBe(visible).click();
-        Allure.addAttachment("Test",attachScreenshot());
+        Allure.addAttachment("Test", attachScreenshot());
         return this;
     }
 

@@ -4,7 +4,8 @@ package pages;
 import com.codeborne.selenide.SelenideElement;
 import com.codeborne.selenide.selector.ByShadow;
 import io.qameta.allure.Step;
-import org.openqa.selenium.*;
+import org.openqa.selenium.By;
+import org.openqa.selenium.TimeoutException;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
@@ -18,35 +19,30 @@ import static com.codeborne.selenide.Selenide.*;
 
 public class MainPage extends BasePage {
 
-    private By STARTPOINTINPUT = By.xpath("//*[contains(@name,'quickFinderBasic-von')]");
-    private By CLEARICONSTART =  By.cssSelector(".test-von-halt .icon-clear");
-    private By CLEARICONFINISH =  By.cssSelector(".test-nach-halt .icon-clear");
+    By STARTPOINTINPUT = By.xpath("//*[contains(@name,'quickFinderBasic-von')]");
+    By CLEARICONSTART = By.cssSelector(".test-von-halt .icon-clear");
+    By CLEARICONFINISH = By.cssSelector(".test-nach-halt .icon-clear");
+    By ENDPOINTINPUT = By.name("quickFinderBasic-nach");
+    private String HOSTOFSHADOWELEMENT = "body > div:nth-child(1)";
+    private String TARGETOFSHADOWELEMENT = ".js-accept-all-cookies";
+    By CALENDAR = By.cssSelector(".button-overlay-body-container__body-content");
+    By DATAENTERFIELD = By.cssSelector(".db-web-date-picker-input__field");
+    By ACCEPTBUTTON = By.xpath("//*[@data-test-id ='quick-finder-save-button']");
+    By STARTDATE = By.cssSelector(".quick-finder-options__hinfahrt");
+    By FINISHDATE = By.cssSelector(".quick-finder-options__rueckfahrt-container");
+    By PASSANGERSDATA = By.xpath("//*[@data-test-id=\"qf-reisende\"]");
+    By UPDATEPASSENGERFORM = By.cssSelector(".button-overlay-body-container__body");
+    By DDPASSENGERNUMBER = By.id("reisendeAnzahl-0");
+    By CHOOSEPASSANGERNUMBER = By.xpath("//*[@id='reisendeAnzahl-0-list']//*[@data-value = '2']");
+    By ADDNEWPASSANGERTYPEDD = By.cssSelector("#reisendeTyp-1");
+    By ADDNEWPASSANGER = By.cssSelector(".ReisendeHinzufuegenButton");
+    By ADDNEWPASSANGERTYPE = By.xpath("//*[@id='reisendeTyp-1-list']//*[@data-value = 'HUND']");
+    By SAVEADDPASSANGERBUTTON = By.xpath("//*[@data-test-id='quick-finder-save-button']");
+    private String mainUrl = "https://www.bahn.de/";
+
     private By POINTDDLIST(String ort) {
         return By.xpath("//*[contains(@data-value, '" + ort + " Hbf')]");
     }
-    private By ENDPOINTINPUT = By.name("quickFinderBasic-nach");
-    private String HOSTOFSHADOWELEMENT = "body > div:nth-child(1)";
-    private String TARGETOFSHADOWELEMENT = ".js-accept-all-cookies";
-    // (//*[contains(text(), "01")])[13]
-    private By CALENDAR = By.cssSelector(".button-overlay-body-container__body-content");
-    private By DATAENTERFIELD = By.cssSelector(".db-web-date-picker-input__field");
-    private By ACCEPTBUTTON = By.xpath("//*[@data-test-id ='quick-finder-save-button']");
-
-    //private By STARTDATE = By.xpath("//*[@class=\"quick-finder-options__hin-rueck-reisende\"]/div[1]");
-    private By STARTDATE = By.cssSelector(".quick-finder-options__hinfahrt");
-    //private By FINISHDATE = By.xpath("//*[@class=\"quick-finder-options__hin-rueck-reisende\"]/div[2]");
-    private By FINISHDATE = By.cssSelector(".quick-finder-options__rueckfahrt-container");
-    //private By PASSANGERSDATA = By.xpath("//*[@class=\"quick-finder-options__hin-rueck-reisende\"]/div[3]");
-    private By PASSANGERSDATA = By.xpath("//*[@data-test-id=\"qf-reisende\"]");
-    private By UPDATEPASSENGERFORM = By.cssSelector(".button-overlay-body-container__body");
-    private By DDPASSENGERNUMBER = By.id("reisendeAnzahl-0");
-    private By CHOOSEPASSANGERNUMBER = By.xpath("//*[@id='reisendeAnzahl-0-list']//*[@data-value = '2']");
-    private By ADDNEWPASSANGERTYPEDD = By.cssSelector("#reisendeTyp-1");
-    private By ADDNEWPASSANGER = By.cssSelector(".ReisendeHinzufuegenButton");
-    private By ADDNEWPASSANGERTYPE = By.xpath("//*[@id='reisendeTyp-1-list']//*[@data-value = 'HUND']");
-    private By SAVEADDPASSANGERBUTTON = By.xpath("//*[@data-test-id='quick-finder-save-button']");
-
-    private String mainUrl = "https://www.bahn.de/";
 
     @Step("Open main page")
     public MainPage openMainPage() {
@@ -55,25 +51,27 @@ public class MainPage extends BasePage {
         validateUrl(mainUrl);
         return this;
     }
+
     @Step("Close coockies")
     public MainPage closeCoockiesIfPresent() {
-        try{
-        waiter.until(ExpectedConditions.elementToBeClickable(ByShadow.cssSelector(TARGETOFSHADOWELEMENT, HOSTOFSHADOWELEMENT)));
-        SelenideElement element = $(ByShadow.cssSelector(TARGETOFSHADOWELEMENT, HOSTOFSHADOWELEMENT));
-        element.click();}
-        catch (TimeoutException a){
+        try {
+            waiter.until(ExpectedConditions.elementToBeClickable(ByShadow.cssSelector(TARGETOFSHADOWELEMENT, HOSTOFSHADOWELEMENT)));
+            SelenideElement element = $(ByShadow.cssSelector(TARGETOFSHADOWELEMENT, HOSTOFSHADOWELEMENT));
+            element.click();
+        } catch (TimeoutException a) {
             System.out.println(" ======= No coockie dialog");
         }
         return this;
     }
+
     @Step("Enter place of start {startpoint} and place of finish {endpoint}")
     public MainPage enterSearchStartEndPoints(String startpoint, String endpoint) {
-        if($(CLEARICONSTART).is(visible)){
+        if ($(CLEARICONSTART).is(visible)) {
             $(CLEARICONSTART).click();
         }
         $(STARTPOINTINPUT).sendKeys(endpoint);
         $(POINTDDLIST(endpoint)).shouldBe(enabled).click();
-        if($(CLEARICONFINISH).is(visible)){
+        if ($(CLEARICONFINISH).is(visible)) {
             $(CLEARICONFINISH).click();
         }
         $(ENDPOINTINPUT).shouldBe(enabled).sendKeys(startpoint);
@@ -97,6 +95,7 @@ public class MainPage extends BasePage {
         $(ACCEPTBUTTON).click();
         return this;
     }
+
     @Step("Choose finish date")
     public MainPage chooseReturnDate(int date, String format) {
         $(FINISHDATE).click();
@@ -106,6 +105,7 @@ public class MainPage extends BasePage {
         $(ACCEPTBUTTON).click();
         return this;
     }
+
     @Step("Add passenger and a dog")
     public MainPage addPassenger() {
         $(PASSANGERSDATA).shouldBe(enabled).click();
@@ -120,7 +120,7 @@ public class MainPage extends BasePage {
     }
 
     @Step("Check selected early parameters")
-    public MainPage checkSelectedParameters(int dateStart, int dateFinish, int passengers, String format){
+    public MainPage checkSelectedParameters(int dateStart, int dateFinish, int passengers, String format) {
         String startDate = futureDate(dateStart, format);
         String finishDate = futureDate(dateFinish, format);
         $(STARTDATE).shouldHave(partialText(startDate));

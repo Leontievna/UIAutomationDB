@@ -12,8 +12,8 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 
 
 public class BasePage {
-    String currentUrl;
     public WebDriverWait waiter;
+    String currentUrl;
 
     @Step("Validation of URL")
     public void validateUrl(String url) {
