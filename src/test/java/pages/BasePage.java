@@ -1,6 +1,5 @@
 package pages;
 
-import com.codeborne.selenide.Configuration;
 import com.codeborne.selenide.Selenide;
 import com.codeborne.selenide.WebDriverRunner;
 import io.qameta.allure.Step;
@@ -9,7 +8,8 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 
 import java.io.ByteArrayInputStream;
 
-import static org.junit.Assert.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+
 
 public class BasePage {
     String currentUrl;
@@ -24,8 +24,4 @@ public class BasePage {
     public ByteArrayInputStream attachScreenshot() {
         return new ByteArrayInputStream(Selenide.screenshot(OutputType.BYTES));
     }
-//    @BeforeClass
-//    public static void Preparation(){
-//        Configuration.headless = true;
-//    }
 }

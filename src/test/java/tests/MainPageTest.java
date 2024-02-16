@@ -4,7 +4,7 @@ package tests;
 import io.qameta.allure.Allure;
 import io.qameta.allure.Description;
 import io.qameta.allure.Epic;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 import pages.BasePage;
 import pages.LoginPage;
 import pages.MainPage;

@@ -1,25 +1,26 @@
 package tests;
 
-import com.codeborne.selenide.Configuration;
 import io.qameta.allure.*;
-import org.junit.BeforeClass;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.parallel.Execution;
+import org.junit.jupiter.api.parallel.ExecutionMode;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.CsvFileSource;
 import pages.BasePage;
 import pages.MainPage;
 import pages.SearchPage;
 
-@Story("Ticket search")
+@Epic("Ticket search")
+@Execution(ExecutionMode.CONCURRENT)
 public class SearchTest extends BasePage {
     MainPage mainPage = new MainPage();
     SearchPage searchPage = new SearchPage();
 
-    @Test()
+    @ParameterizedTest
+    @CsvFileSource(files = "src/test/java/resources/destination.csv", numLinesToSkip = 1)
     @Description("Smoke test for search")
-    public void FirstTest(){
+    public void searchSmokeTest(String startpointvalue, String endpointvalue){
         try{
-        String startpointvalue = "Bonn";
-        String endpointvalue = "Hamburg";
-
         mainPage.openMainPage()
                 .closeCoockiesIfPresent()
                 .enterSearchStartEndPoints(startpointvalue,endpointvalue);
@@ -33,9 +34,9 @@ public class SearchTest extends BasePage {
         }
     }
 
-    @Test()
+    @Test
     @Description("Main scenario")
-    public void SecondTest() {
+    public void searchE2ETest() {
         try{
         String startpointvalue = "Bonn";
         String endpointvalue = "Hamburg";
