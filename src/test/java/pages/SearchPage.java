@@ -43,7 +43,8 @@ public class SearchPage extends BasePage {
 
     @Step("Check the table with results of search")
     public SearchPage validationTableResult(String startpointvalue, String endpointvalue) {
-        $$(REISETICKETS).first().shouldHave(Condition.partialText(endpointvalue), Condition.partialText(startpointvalue));
+        $$(REISETICKETS).first().shouldBe(visible,Duration.ofSeconds(6))
+                .shouldHave(Condition.partialText(endpointvalue), Condition.partialText(startpointvalue));
         return this;
     }
 
