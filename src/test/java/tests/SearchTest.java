@@ -43,8 +43,8 @@ public class SearchTest extends BasePage {
             String name = "Anton";
             String lastname = "Dolin";
             String userEmail = "Kunde.karla@gmx.de";
-            int date1 = 2;
-            int date2 = date1 + 3;
+            int date1 = 5;
+            int date2 = date1 + 5;
             mainPage.openMainPage()
                     .closeCoockiesIfPresent()
                     .enterSearchStartEndPoints(endpointvalue, startpointvalue)
