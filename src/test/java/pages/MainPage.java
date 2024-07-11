@@ -23,11 +23,10 @@ public class MainPage extends BasePage {
     By CLEARICONSTART = By.cssSelector(".test-von-halt .icon-clear");
     By CLEARICONFINISH = By.cssSelector(".test-nach-halt .icon-clear");
     By ENDPOINTINPUT = By.name("quickFinderBasic-nach");
-    private String HOSTOFSHADOWELEMENT = "body > div:nth-child(1)";
-    private String TARGETOFSHADOWELEMENT = ".js-accept-all-cookies";
+    String TARGETOFSHADOWELEMENT = ".js-accept-all-cookies";
     By CALENDAR = By.cssSelector(".button-overlay-body-container__body-content");
     By DATAENTERFIELD = By.cssSelector(".db-web-date-picker-input__field");
-    By ACCEPTBUTTON = By.xpath("//*[@data-test-id ='quick-finder-save-button']");
+    By ACCEPTBUTTON = By.xpath("//*[@data-test-id ='undefined-save-button']");
     By STARTDATE = By.cssSelector(".quick-finder-options__hinfahrt");
     By FINISHDATE = By.cssSelector(".quick-finder-options__rueckfahrt-container");
     By PASSANGERSDATA = By.xpath("//*[@data-test-id=\"qf-reisende\"]");
@@ -38,7 +37,7 @@ public class MainPage extends BasePage {
     By ADDNEWPASSANGER = By.cssSelector(".ReisendeHinzufuegenButton");
     By ADDNEWPASSANGERTYPE = By.xpath("//*[@id='reisendeTyp-1-list']//*[@data-value = 'HUND']");
     By SAVEADDPASSANGERBUTTON = By.xpath("//*[@data-test-id='quick-finder-save-button']");
-    private String mainUrl = "https://www.bahn.de/";
+    String mainUrl = "https://www.bahn.de/";
 
     private By POINTDDLIST(String ort) {
         return By.xpath("//*[contains(@data-value, '" + ort + " Hbf')]");
@@ -55,6 +54,7 @@ public class MainPage extends BasePage {
     @Step("Close coockies")
     public MainPage closeCoockiesIfPresent() {
         try {
+            String HOSTOFSHADOWELEMENT = "body > div:nth-child(1)";
             waiter.until(ExpectedConditions.elementToBeClickable(ByShadow.cssSelector(TARGETOFSHADOWELEMENT, HOSTOFSHADOWELEMENT)));
             SelenideElement element = $(ByShadow.cssSelector(TARGETOFSHADOWELEMENT, HOSTOFSHADOWELEMENT));
             element.click();
