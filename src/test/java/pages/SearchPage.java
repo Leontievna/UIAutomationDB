@@ -1,6 +1,5 @@
 package pages;
 
-import com.codeborne.selenide.CollectionCondition;
 import com.codeborne.selenide.Condition;
 import io.qameta.allure.Allure;
 import io.qameta.allure.Step;
@@ -32,7 +31,6 @@ public class SearchPage extends BasePage {
     By EMAIL = By.name("kundenkonto-kontakt-email");
     MainPage mainPage = new MainPage();
     private String url = "https://www.bahn.de/";
-    private String kundeUrl = "fahrplan/kundendaten";
     private String offerUrl = "buchung/fahrplan/angebotsauswahl";
     private String paymentUrl = "/buchung/fahrplan/zahlung";
 
@@ -73,8 +71,7 @@ public class SearchPage extends BasePage {
         waiter.until(ExpectedConditions.visibilityOfElementLocated(SEATPLACEDESCRIPTION));
         $(CONFIRMOFFER).scrollIntoView(true);
         $(CONFIRMOFFER).shouldBe(visible, Duration.ofSeconds(10)).click();
-        assertThat($(ANONIM).shouldBe(visible, Duration.ofSeconds(8)));
-        assertThat(webdriver().object().getCurrentUrl().contains(kundeUrl));
+        $(ANONIM).shouldBe(visible, Duration.ofSeconds(8));
         Allure.addAttachment("Test", attachScreenshot());
         return this;
     }
