@@ -11,14 +11,14 @@ import pages.MainPage;
 import pages.SearchPage;
 
 @Epic("Ticket search")
-public class SearchTest extends BasePage {
+class SearchTest extends BasePage {
     MainPage mainPage = new MainPage();
     SearchPage searchPage = new SearchPage();
 
     @ParameterizedTest
     @CsvFileSource(files = "src/test/java/resources/destination.csv", numLinesToSkip = 1)
     @Description("Smoke test for search")
-    public void searchSmokeTest(String startpointvalue, String endpointvalue) {
+    void searchSmokeTest(String startpointvalue, String endpointvalue) {
         try {
             mainPage.openMainPage()
                     .closeCoockiesIfPresent()
@@ -34,17 +34,17 @@ public class SearchTest extends BasePage {
 
     @Test
     @Description("Main scenario")
-    public void searchE2ETest() {
+    void searchE2ETest() {
         try {
             String startpointvalue = "Bonn";
             String endpointvalue = "Hamburg";
-            String format = "dd.MM.yyyy";
+            String format = "ddMMyyyy";
             String formatCheck = "dd. MMM";
             String name = "Anton";
             String lastname = "Dolin";
             String userEmail = "Kunde.karla@gmx.de";
-            int date1 = 2;
-            int date2 = date1 + 3;
+            int date1 = 5;
+            int date2 = date1 + 5;
             mainPage.openMainPage()
                     .closeCoockiesIfPresent()
                     .enterSearchStartEndPoints(endpointvalue, startpointvalue)
