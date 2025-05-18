@@ -21,6 +21,7 @@ jobs:
 
     steps:
     - uses: actions/checkout@v3
+
     - name: Set up JDK 20
       uses: actions/setup-java@v3
       with:
@@ -31,9 +32,33 @@ jobs:
     - name: Build with Maven
       run: mvn -Dselenide.headless=true clean test
 
-    - name: Upload Allure Report
-      uses: actions/upload-artifact@v2
-      if: (success() || failure())
+#    - name: Upload Allure Report
+#      uses: actions/upload-artifact@v2
+#      if: (success() || failure())
+#      with:
+#        name: allure-results
+#        path: allure-results
+
+    - name: Load test report history
+      uses: actions/checkout@v3
+      if: always()
+      continue-on-error: true
       with:
-        name: allure-results
-        path: allure-results
+        ref: gh-pages
+        path: gh-pages
+
+    - name: Build test report
+      uses: simple-elf/allure-report-action@v1.7
+      if: always()
+      with:
+        gh_pages: gh-pages
+        allure_history: allure-history
+        allure_results: allure-results
+
+    - name: Publish test report
+      uses: peaceiris/actions-gh-pages@v3
+      if: always()
+      with:
+        github_token: ${{ secrets.GITHUB_TOKEN }}
+        publish_branch: gh-pages
+        publish_dir: allure-history
