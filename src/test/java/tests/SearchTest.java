@@ -38,7 +38,7 @@ public class SearchTest extends BasePage {
         try {
             String startpointvalue = "Bonn";
             String endpointvalue = "Hamburg";
-            String format = "dd.MM.yyyy";
+            String format = "ddMMyyyy";
             String formatCheck = "dd. MMM";
             String name = "Anton";
             String lastname = "Dolin";
