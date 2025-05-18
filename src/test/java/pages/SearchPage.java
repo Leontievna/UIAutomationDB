@@ -15,7 +15,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 public class SearchPage extends BasePage {
     By SEARCHBUTTON = By.cssSelector(".quick-finder-basic__search-btn");
-    By REISETICKETS = By.cssSelector("div.reiseloesung");
+    By REISETICKETS = By.cssSelector("li.verbindung-list__result-item");
     By APPLYTICKET = By.cssSelector(".verbindung-list__result-item--0 .reise-preis__area .db-web-button ");
     By TICKETSLISTHEADER = By.cssSelector(".buchungsstrecke-heading__title");
     By OFFERSSTEP = By.xpath("//*/div[contains(@class, '_active')]/span[contains(@aria-current, 'step')]/span[contains(text(), 'Angebote')]");
@@ -43,7 +43,7 @@ public class SearchPage extends BasePage {
 
     @Step("Check the table with results of search")
     public SearchPage validationTableResult(String startpointvalue, String endpointvalue) {
-        $$(REISETICKETS).first().shouldBe(visible, Duration.ofSeconds(6))
+        $$(REISETICKETS).first().shouldBe(visible, Duration.ofSeconds(8))
                 .shouldHave(Condition.partialText(endpointvalue), Condition.partialText(startpointvalue));
         return this;
     }
