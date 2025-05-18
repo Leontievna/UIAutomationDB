@@ -5,6 +5,7 @@ import com.codeborne.selenide.SelenideElement;
 import com.codeborne.selenide.selector.ByShadow;
 import io.qameta.allure.Step;
 import org.openqa.selenium.By;
+import org.openqa.selenium.Keys;
 import org.openqa.selenium.TimeoutException;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
@@ -88,21 +89,26 @@ public class MainPage extends BasePage {
     }
 
     @Step("Choose start date")
-    public MainPage chooseStartDate(int date, String format) {
+    public MainPage chooseStartDate() {
         $(STARTDATE).click();
         $(CALENDAR).shouldBe(visible);
         $(DATAINPUT).doubleClick();
-        $(DATEDAY).sendKeys(futureDate(date, format));
+        for (int i = 0; i < 2; i++) {
+            $(DATEDAY).sendKeys(Keys.ARROW_UP);
+        }
+        //$(DATEDAY).sendKeys(futureDate(date, format)); - there is a bug on UI
         $(ACCEPTBUTTON).click();
         return this;
     }
 
     @Step("Choose finish date")
-    public MainPage chooseReturnDate(int date2, String format) {
+    public MainPage chooseReturnDate() {
         $(FINISHDATE).click();
         $(CALENDAR).shouldBe(visible);
         $(DATAINPUT).doubleClick();
-        $(DATEDAY).sendKeys(futureDate(date2, format));
+        for (int i = 0; i < 4; i++) {
+            $(DATEDAY).sendKeys(Keys.ARROW_UP);
+        }
         $(ACCEPTBUTTON).click();
         return this;
     }

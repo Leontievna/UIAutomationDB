@@ -38,18 +38,17 @@ class SearchTest extends BasePage {
         try {
             String startpointvalue = "Bonn";
             String endpointvalue = "Hamburg";
-            String format = "ddMMyyyy";
             String formatCheck = "dd. MMM";
             String name = "Anton";
             String lastname = "Dolin";
             String userEmail = "Kunde.karla@gmx.de";
-            int date1 = 5;
+            int date1 = 2;
             int date2 = date1 + 5;
             mainPage.openMainPage()
                     .closeCoockiesIfPresent()
                     .enterSearchStartEndPoints(endpointvalue, startpointvalue)
-                    .chooseStartDate(date1, format)
-                    .chooseReturnDate(date2, format)
+                    .chooseStartDate()
+                    .chooseReturnDate()
                     .addPassenger()
                     .checkSelectedParameters(date1, date2, 3, formatCheck);
             searchPage.search()

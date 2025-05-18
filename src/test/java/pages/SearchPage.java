@@ -15,11 +15,11 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 public class SearchPage extends BasePage {
     By SEARCHBUTTON = By.cssSelector(".quick-finder-basic__search-btn");
-    By REISETICKETS = By.cssSelector("div.reiseloesung__item");
-    By APPLYTICKET = By.cssSelector(".verbindung-list__result-item--0 .reiseloesung-button-container__btn-waehlen");
+    By REISETICKETS = By.cssSelector("div.reiseloesung");
+    By APPLYTICKET = By.cssSelector(".verbindung-list__result-item--0 .reise-preis__area .db-web-button ");
     By TICKETSLISTHEADER = By.cssSelector(".buchungsstrecke-heading__title");
-    By OFFERSSTEP = By.xpath("//*[@data-page=\"Angebote\"]");
-    By OFFERCARDSBUTTON = By.xpath("//button[.='Auswählen']");
+    By OFFERSSTEP = By.xpath("//*/div[contains(@class, '_active')]/span[contains(@aria-current, 'step')]/span[contains(text(), 'Angebote')]");
+    By OFFERCARDSBUTTON = By.cssSelector(".angebot-actions__btn-nicht-ausgewaehlt");
     By SEATPLACEDESCRIPTION = By.cssSelector("#reservierung .db-web-checkbox__input");
     By SEATPLACE = By.className("platzreservierung-label");
     By CONFIRMOFFER = By.id("btn-weiter");
@@ -43,17 +43,17 @@ public class SearchPage extends BasePage {
 
     @Step("Check the table with results of search")
     public SearchPage validationTableResult(String startpointvalue, String endpointvalue) {
-        $$(REISETICKETS).first().shouldBe(visible,Duration.ofSeconds(6))
+        $$(REISETICKETS).first().shouldBe(visible, Duration.ofSeconds(6))
                 .shouldHave(Condition.partialText(endpointvalue), Condition.partialText(startpointvalue));
         return this;
     }
 
     @Step("Selection of tickets")
     public SearchPage selectionOfTicket(int date, String format) {
-        $(APPLYTICKET).shouldBe(enabled).click();
+        $(APPLYTICKET).shouldBe(editable,Duration.ofSeconds(3)).click();
         $(TICKETSLISTHEADER).shouldHave(partialText(mainPage.futureDate(date, format)));
         $(APPLYTICKET).shouldBe(enabled).click();
-        $(OFFERSSTEP).shouldBe(visible);
+        $(OFFERSSTEP).shouldBe(visible, Duration.ofSeconds(3));
         return this;
     }
 
@@ -61,12 +61,10 @@ public class SearchPage extends BasePage {
     public SearchPage chooseClassOffer() {
         validateUrl(offerUrl);
         waiter = new WebDriverWait(webdriver().object(), Duration.ofSeconds(12));
-        //$$(OFFERCARDS).first().click();
         if ($$(OFFERCARDSBUTTON).first().isEnabled()){
             $$(OFFERCARDSBUTTON).first().click();
         }
         $(SEATPLACE).scrollIntoView(true);
-        //waiter.until(ExpectedConditions.visibilityOf($(SEATPLACE)));
         $(SEATPLACE).shouldBe(enabled,Duration.ofSeconds(6)).click();
         waiter.until(ExpectedConditions.visibilityOfElementLocated(SEATPLACEDESCRIPTION));
         $(CONFIRMOFFER).scrollIntoView(true);
